@@ -96,6 +96,7 @@ for s in SHARDS:
         'allow_link_shares': s.get('allow_link_shares', 'True') and ALLOW_LINK_SHARES
     })
 
+HOST_SUBDIRECTORY = config_get('HOST_SUBDIRECTORY', '')
 HOST_URL = config_get('HOST_URL')
 SERVER_URL = config_get('SERVER_URL')
 SERVER_PUBLIC_KEY = config_get('SERVER_PUBLIC_KEY')
@@ -384,12 +385,12 @@ def generate_signature():
         'host_url': HOST_URL,
     }
 
-    info = json.dumps(info)
+    infostr = json.dumps(info)
 
     signing_box = nacl.signing.SigningKey(PRIVATE_KEY, encoder=nacl.encoding.HexEncoder)
     verify_key = signing_box.verify_key.encode(encoder=nacl.encoding.HexEncoder)
     # The first 128 chars (512 bits or 64 bytes) are the actual signature, the rest the binary encoded info
-    signature = binascii.hexlify(signing_box.sign(info.encode()))[:128]
+    signature = binascii.hexlify(signing_box.sign(infostr.encode()))[:128]
 
     return {
         'info': info,

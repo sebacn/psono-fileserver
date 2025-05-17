@@ -1,11 +1,16 @@
+import os
 import time
 import requests
 import sys, getopt
+from django.conf import settings
 
 
 def send_request(token, url):
     try:
-        response = requests.get(url + '/cron/ping/', headers={'Authorization': f'Token {token}'}, timeout=5)
+        subdir_raw = getattr(settings, 'HOST_SUBDIRECTORY', '').strip('/')
+        subdir = f'/{subdir_raw}' if subdir_raw else ''
+
+        response = requests.get(url + subdir + '/cron/ping/', headers={'Authorization': f'Token {token}'}, timeout=5)
     except Exception as e:
         print(e)
         return
@@ -36,4 +41,5 @@ def main(argv):
         time.sleep(10)
 
 if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "psono.settings")
     main(sys.argv[1:])
