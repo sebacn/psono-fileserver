@@ -13,19 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.urls import re_path, include
+from django.urls import re_path, include, path
 from rest_framework import routers
+from django.conf import settings
 
 router = routers.DefaultRouter()
-
-subdir_raw = getattr(settings, 'HOST_SUBDIRECTORY', '').strip('/')
-subdir = f'{subdir_raw}/' if subdir_raw else ''
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    re_path(f'^', include('restapi.urls')),
-    re_path(f'^{subdir}cron/', include('cron.urls')),
-    re_path(f'^{subdir}api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    re_path(r'^', include('restapi.urls')),
+    re_path(r'^cron/', include('cron.urls')),
+    re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
+if settings.HOST_SUBDIRECTORY:
+    urlpatterns = [path(f'{settings.HOST_SUBDIRECTORY}/', include(urlpatterns))]
