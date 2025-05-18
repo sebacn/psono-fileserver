@@ -12,11 +12,11 @@ def send_request(token, url):
 
         response = requests.get(url + subdir + '/cron/ping/', headers={'Authorization': f'Token {token}'}, timeout=5)
     except Exception as e:
-        print(e)
+        print(f'URL: {url + subdir}/cron/ping/  Error: ' + e)
         return
          
     if response.status_code != 200:
-        print(response.status_code, response.content)
+        print(response.status_code, f'URL: {url + subdir}/cron/ping/', response.content)
 
 
 def main(argv):

@@ -20,7 +20,6 @@ urlpatterns = [
 
     # re_path(r'^$', views.api_root),
 
-    re_path(r'^healthcheck/$', views.HealthCheckView.as_view(), name='healthcheck'),
     re_path(r'^upload/$', views.UploadView.as_view(), name='upload'),
     re_path(r'^download/$', views.DownloadView.as_view(), name='download'),
     re_path(r'^info/$', views.InfoView.as_view(), name='info'),

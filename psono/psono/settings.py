@@ -368,34 +368,3 @@ def generate_fileserver_info():
     return nacl.encoding.HexEncoder.encode(encrypted).decode()
 
 FILESERVER_INFO = generate_fileserver_info()
-
-def generate_signature():
-
-    info = {
-        'version': VERSION,
-        'fileserver_id': FILESERVER_ID,
-        'api': 1,
-        'public_key': PUBLIC_KEY,
-        'cluster_id': CLUSTER_ID,
-        'shards': SHARDS_PUBLIC,
-        'read': READ,
-        'write': WRITE,
-        'delete': DELETE,
-        'allow_link_shares': ALLOW_LINK_SHARES,
-        'host_url': HOST_URL,
-    }
-
-    infostr = json.dumps(info)
-
-    signing_box = nacl.signing.SigningKey(PRIVATE_KEY, encoder=nacl.encoding.HexEncoder)
-    verify_key = signing_box.verify_key.encode(encoder=nacl.encoding.HexEncoder)
-    # The first 128 chars (512 bits or 64 bytes) are the actual signature, the rest the binary encoded info
-    signature = binascii.hexlify(signing_box.sign(infostr.encode()))[:128]
-
-    return {
-        'info': info,
-        'signature': signature,
-        'verify_key': verify_key,
-    }
-
-SIGNATURE = generate_signature()

@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import re_path, include, path
 from rest_framework import routers
 from django.conf import settings
+from restapi import views
 
 router = routers.DefaultRouter()
 
@@ -28,4 +29,6 @@ urlpatterns = [
 ]
 
 if settings.HOST_SUBDIRECTORY:
-    urlpatterns = [path(f'{settings.HOST_SUBDIRECTORY}/', include(urlpatterns))]
+    urlpatterns = [
+        path(f'{settings.HOST_SUBDIRECTORY}/', include(urlpatterns)),
+        re_path(r'^healthcheck/$', views.HealthCheckView.as_view(), name='healthcheck')]
