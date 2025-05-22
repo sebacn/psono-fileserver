@@ -28,7 +28,9 @@ urlpatterns = [
     re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
-if settings.HOST_SUBDIRECTORY:
+if settings.URL_PREFIX:
     urlpatterns = [
-        path(f'{settings.HOST_SUBDIRECTORY}/', include(urlpatterns)),
+        path(f'{settings.URL_PREFIX}', include(urlpatterns)),
         re_path(r'^healthcheck/$', views.HealthCheckView.as_view(), name='healthcheck')]
+else:
+    urlpatterns += [re_path(r'^healthcheck/$', views.HealthCheckView.as_view(), name='healthcheck')]

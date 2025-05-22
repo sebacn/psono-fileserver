@@ -96,7 +96,7 @@ for s in SHARDS:
         'allow_link_shares': s.get('allow_link_shares', 'True') and ALLOW_LINK_SHARES
     })
 
-HOST_SUBDIRECTORY = config_get('HOST_SUBDIRECTORY', '')
+URL_PREFIX = config_get('URL_PREFIX', '')
 HOST_URL = config_get('HOST_URL')
 SERVER_URL = config_get('SERVER_URL')
 SERVER_PUBLIC_KEY = config_get('SERVER_PUBLIC_KEY')

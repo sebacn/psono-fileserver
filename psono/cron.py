@@ -7,7 +7,7 @@ from django.conf import settings
 
 def send_request(token, url):
     try:
-        subdir_raw = getattr(settings, 'HOST_SUBDIRECTORY', '').strip('/')
+        subdir_raw = settings.URL_PREFIX.strip('/')
         subdir = f'/{subdir_raw}' if subdir_raw else ''
 
         response = requests.get(url + subdir + '/cron/ping/', headers={'Authorization': f'Token {token}'}, timeout=5)
