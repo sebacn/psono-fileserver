@@ -5,15 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Django",
+            "name": "Python: Django: runserver",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/psono/manage.py",
             "console": "integratedTerminal",
             "args": [
                 "runserver",
+                "localhost:8000",
                 "--noreload",
                 "--nothreading"
+            ],
+            "django": true
+        },
+        {
+            "name": "Python: Django: cron",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/psono/cron.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--token",
+                "<hash of PK>",
+                "--url",
+                "http://localhost:8000"
             ],
             "django": true
         }
