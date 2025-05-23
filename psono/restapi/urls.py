@@ -13,20 +13,15 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  re_path(r'^blog/', include(blog_urls))
 """
-from django.conf import settings
 from django.urls import re_path
 from . import views
-
-subdir_raw = getattr(settings, 'HOST_SUBDIRECTORY', '').strip('/')
-subdir = f'{subdir_raw}/' if subdir_raw else ''
 
 urlpatterns = [
 
     # re_path(r'^$', views.api_root),
 
-    re_path(f'^{subdir}healthcheck/$', views.HealthCheckView.as_view(), name='healthcheck'),
-    re_path(f'^{subdir}upload/$', views.UploadView.as_view(), name='upload'),
-    re_path(f'^{subdir}download/$', views.DownloadView.as_view(), name='download'),
-    re_path(f'^{subdir}info/$', views.InfoView.as_view(), name='info'),
+    re_path(r'^upload/$', views.UploadView.as_view(), name='upload'),
+    re_path(r'^download/$', views.DownloadView.as_view(), name='download'),
+    re_path(r'^info/$', views.InfoView.as_view(), name='info'),
 
 ]

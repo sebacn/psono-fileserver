@@ -79,6 +79,12 @@ class HealthCheckView(GenericAPIView):
                             'free_space_mb': round(free_space / (1024 * 1024), 2),
                             'min_required_mb': round(min_disk_space / (1024 * 1024), 2)
                         }
+                    else:
+                        shard_status_info[s['shard_id']] = {
+                            'status': 'Ok',
+                            'free_space_mb': round(free_space / (1024 * 1024), 2),
+                            'min_required_mb': round(min_disk_space / (1024 * 1024), 2)
+                        }
                 except (FileNotFoundError, PermissionError, OSError) as e:
                     # Handle errors in accessing the storage path
                     shard_status = False
